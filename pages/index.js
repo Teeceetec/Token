@@ -4,11 +4,11 @@ import { ERC_CONTRACT_ADDRESS, ERC_CONTRACT_ABI } from ".../constants/constant";
 
 import styles from "../styles/Home.module.css";
 //import Web3Modal from "web3modal";
-import { Contract, utils, ethers} from "ethers";
+import { Contract, utils, ethers } from "ethers";
 
 export default function Home() {
   const [walletConnected, setWalletConnected] = useState(false);
-  const [loading, setLoading] = useState(false);
+
   const [totalAmount, setTotalAmount] = useState(0);
   const [recipientAddress, setRecipientAddress] = useState("");
   const [recipientAmount, setRecipientAmount] = useState(0);
@@ -50,7 +50,7 @@ export default function Home() {
           recipientAddress,
           utils.parseEther(recipientAmount),
         );
-        setLoading(true);
+
         await tx.wait();
         console.log("Transfer successful");
         window.alert("Transfer successful!!");
@@ -70,7 +70,7 @@ export default function Home() {
       const { ethereum } = window;
 
       if (ethereum) {
-        const provider = new  ethers.providers.Web3Provider(ethereum);
+        const provider = new ethers.providers.Web3Provider(ethereum);
         const contract = new Contract(
           ERC_CONTRACT_ADDRESS,
           ERC_CONTRACT_ABI,
@@ -89,7 +89,7 @@ export default function Home() {
     try {
       const { ethereum } = window;
       if (ethereum) {
-       throw new Error("Not implemented");
+        throw new Error("Not implemented");
       }
       const provider = new ethers.providers.Web3Provider(ethereum);
       const contract = new Contract(
@@ -159,7 +159,7 @@ export default function Home() {
         <h1 className={styles.title}>ERC20 TOKEN</h1>
         <div>
           <h3>TOTAL_SUPPLY : {totalAmount}</h3>
-           <button onClick={getTotalSupply}>getsupply</button>
+          <button onClick={getTotalSupply}>getsupply</button>
           <label>
             Recipient Address:
             <input
