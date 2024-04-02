@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import { ERC_CONTRACT_ADDRESS, ERC_CONTRACT_ABI } from "../constant/constant";
+import { ERC_CONTRACT_ADDRESS, ERC_CONTRACT_ABI } from ".../constants/constant";
 
 import styles from "../styles/Home.module.css";
 //import Web3Modal from "web3modal";
