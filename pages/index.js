@@ -96,7 +96,7 @@ export default function Home() {
           provider,
         );
 
-        const total = await contract.totalSupply();
+        const total = await contract.getTotalsupply();
         setTotalAmount(formatEther(total));
       }
     } catch (err) {
