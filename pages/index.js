@@ -4,7 +4,7 @@ import { ERC_CONTRACT_ADDRESS, ERC_CONTRACT_ABI } from "../constants/index.js";
 
 import styles from "../styles/Home.module.css";
 //import Web3Modal from "web3modal";
-import { Contract, utils, ethers } from "ethers";
+import { Contract, formatEther, parseEther, ethers } from "ethers";
 
 export default function Home() {
   const [walletConnected, setWalletConnected] = useState(false);
@@ -26,7 +26,7 @@ export default function Home() {
     setRecipientAmount(e.target.value);
   };
 
-  const recipieentBalanceChange = (e) => {
+  const recipientBalanceChange = (e) => {
     setRecipientBalance(e.target.value);
   };
 
@@ -39,7 +39,7 @@ export default function Home() {
     try {
       const { ethereum } = window;
       if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
+        const provider = new ethers.BrowserProvider(ethereum);
         const contract = new Contract(
           ERC_CONTRACT_ADDRESS,
           ERC_CONTRACT_ABI,
@@ -48,7 +48,7 @@ export default function Home() {
 
         const tx = await contract.transfer(
           recipientAddress,
-          utils.parseEther(recipientAmount),
+          parseEther(recipientAmount),
         );
 
         await tx.wait();
@@ -70,7 +70,7 @@ export default function Home() {
       const { ethereum } = window;
 
       if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
+        const provider = new ethers.BrowserProvider(ethereum);
         const contract = new Contract(
           ERC_CONTRACT_ADDRESS,
           ERC_CONTRACT_ABI,
@@ -78,7 +78,7 @@ export default function Home() {
         );
 
         const balance = await contract.balanceOf(recipientAddress);
-        setRecipientBalance(utils.formatEther(balance));
+        setRecipientBalance(formatEther(balance));
       }
     } catch (err) {
       console.log(err);
@@ -89,17 +89,16 @@ export default function Home() {
     try {
       const { ethereum } = window;
       if (ethereum) {
-        throw new Error("Not implemented");
-      }
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const contract = new Contract(
-        ERC_CONTRACT_ADDRESS,
-        ERC_CONTRACT_ABI,
-        provider,
-      );
+        const provider = new ethers.BrowserProvider(ethereum);
+        const contract = new Contract(
+          ERC_CONTRACT_ADDRESS,
+          ERC_CONTRACT_ABI,
+          provider,
+        );
 
-      const total = await contract.totalSupply();
-      setTotalAmount(utils.formatEther(total));
+        const total = await contract.totalSupply();
+        setTotalAmount(formatEther(total));
+      }
     } catch (err) {
       console.log(err);
     }
@@ -109,13 +108,13 @@ export default function Home() {
     try {
       if (window.ethereum) {
         await window.ethereum.request({ method: "eth_requestAccounts" });
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const provider = new ethers.BrowserProvider(window.ethereum);
         setProvider(provider);
+        setWalletConnected(true);
       }
     } catch (err) {
       console.error(err);
     }
-    setWalletConnected(true);
   };
 
   useEffect(() => {
@@ -158,7 +157,7 @@ export default function Home() {
       <main className={styles.main}>
         <h1 className={styles.title}>ERC20 TOKEN</h1>
         <div>
-          <h3>TOTAL_SUPPLY : {totalAmount}</h3>
+          <h3>TOTAL_SUPPLY!! : {totalAmount}</h3>
           <button onClick={getTotalSupply}>getsupply</button>
           <label>
             Recipient Address:
@@ -185,18 +184,18 @@ export default function Home() {
             <input
               type="text"
               value={recipientBalance}
-              onChange={recipieentBalanceChange}
+              onChange={recipientBalanceChange}
             />
           </label>
           <button onClick={getBalance}>Get Balance</button>
         </div>
 
         <div>
-          <h3>AddressBalance: {recipientBalance}</h3>
+          <h3>AddressBalance!!: {recipientBalance}</h3>
         </div>
 
         <p>Connect your wallet by clicking this button</p>
-        <p> Network connected: {netWork}</p>
+
         {renderButton()}
       </main>
     </div>
